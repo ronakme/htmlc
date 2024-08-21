@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Placed</title>
+    <style>
+        /* Global Styling */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #43cea2, #185a9d);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Funky Lines - Background Decoration */
+        .funky-line {
+            position: absolute;
+            width: 150px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 20px;
+            animation: moveLine 8s linear infinite;
+        }
+
+        .funky-line:nth-child(1) {
+            top: 10%;
+            left: -20%;
+            width: 200px;
+            animation-delay: 0s;
+        }
+
+        .funky-line:nth-child(2) {
+            top: 40%;
+            right: -30%;
+            width: 300px;
+            animation-delay: 2s;
+        }
+
+        .funky-line:nth-child(3) {
+            bottom: 20%;
+            left: -25%;
+            width: 150px;
+            animation-delay: 4s;
+        }
+
+        .funky-line:nth-child(4) {
+            bottom: 60%;
+            right: -35%;
+            width: 250px;
+            animation-delay: 6s;
+        }
+
+        @keyframes moveLine {
+            0% {
+                transform: translateX(0) rotate(0deg);
+            }
+
+            100% {
+                transform: translateX(200%) rotate(360deg);
+            }
+        }
+
+        /* Container for the order success message */
+        .container {
+            text-align: center;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            animation: fadeInUp 1.5s ease-out;
+            z-index: 10;
+        }
+
+        /* Checkmark Animation */
+        .checkmark {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: #4caf50;
+            margin: 0 auto 20px;
+            position: relative;
+            animation: scaleUp 0.7s ease-in-out;
+        }
+
+        .checkmark:after {
+            content: '';
+            width: 30px;
+            height: 60px;
+            border: solid #fff;
+            border-width: 0 10px 10px 0;
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            transform: rotate(45deg);
+            transform-origin: left top;
+            animation: drawCheck 0.4s ease forwards;
+        }
+
+        /* Title */
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        /* Success Message */
+        p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            animation: fadeIn 1.2s ease forwards;
+        }
+
+        /* Button Styling */
+        .btn {
+            text-decoration: none;
+            background-color: #fff;
+            color: #43cea2;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleUp {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        @keyframes drawCheck {
+            0% {
+                width: 0;
+                height: 0;
+            }
+
+            100% {
+                width: 30px;
+                height: 60px;
+            }
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Funky Animated Lines -->
+    <div class="funky-line"></div>
+    <div class="funky-line"></div>
+    <div class="funky-line"></div>
+    <div class="funky-line"></div>
+
+    <div class="container">
+        <div class="checkmark"></div>
+        <h1>Order Placed!</h1>
+        <p>Your order has been successfully placed. Thank you for shopping with us!</p>
+        <a href="index.html" class="btn">Continue Shopping</a>
+    </div>
+
+</body>
+
+</html>

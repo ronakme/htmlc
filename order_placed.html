@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Placed</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #f0f2f5, #c3cfe2);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .confirmation {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .confirmation h2 {
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+
+        .download-btn, .back-btn {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 10px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .download-btn:hover, .back-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="confirmation">
+        <h2>Order Placed!</h2>
+        <p>Your order has been placed successfully.</p>
+        <button class="download-btn" onclick="downloadReceipt()">Download Receipt PDF</button>
+        <button class="back-btn" onclick="backToMenu()">Back to Menu</button>
+    </div>
+
+    <script>
+        function downloadReceipt() {
+            const cart = JSON.parse(localStorage.getItem('cart'));
+            let receiptText = 'Order Receipt\n\n';
+            let totalCost = 0;
+
+            if (cart) {
+                cart.forEach(item => {
+                    const itemCost = item.price * item.qty;
+                    totalCost += itemCost;
+                    receiptText += `${item.name} (x${item.qty}) - ₹${itemCost.toFixed(2)}\n`;
+                });
+            }
+
+            receiptText += `\nTotal Cost: ₹${totalCost.toFixed(2)}`;
+
+            const blob = new Blob([receiptText], { type: 'application/pdf' });
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'receipt.pdf';
+            link.click();
+
+            // Send the receipt via email
+            sendReceiptByEmail(receiptText);
+        }
+
+        function sendReceiptByEmail(receiptText) {
+            const email = 'ronakzgupta@gmail.com';
+            const subject = 'Your Order Receipt';
+            const body = encodeURIComponent(receiptText);
+            window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+        }
+
+        function backToMenu() {
+            localStorage.removeItem('cart');
+            window.location.href = 'menu.html';
+        }
+    </script>
+</body>
+</html>

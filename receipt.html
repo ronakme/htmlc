@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Receipt</title>
+    <style>
+       body {
+    background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.receipt {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+}
+
+.receipt h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.receipt-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.receipt-item h4, .receipt-item p {
+    margin: 0;
+}
+
+.total-cost {
+    text-align: right;
+    font-weight: bold;
+    margin-top: 20px;
+    font-size: 1.2em;
+}
+
+.payment-options, .back-to-menu {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.payment-btn, .back-btn {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.payment-btn:hover, .back-btn:hover {
+    background-color: #45a049;
+}
+
+.payment-btn.upi {
+    background-color: #008CBA;
+}
+
+.payment-btn.upi:hover {
+    background-color: #007bb5;
+}
+
+.back-btn {
+    background-color: #f39c12;
+}
+
+.back-btn:hover {
+    background-color: #e67e22;
+}   
+    </style>
+</head>
+<body>
+    <div class="receipt">
+        <h2>Order Receipt</h2>
+        <div id="receipt-items"></div>
+        <div class="total-cost">Total Cost: ₹0.00</div>
+        <div class="payment-options">
+            <button class="payment-btn" onclick="payUsingCash()">Pay using Cash</button>
+            <button class="payment-btn upi" onclick="payUsingUPI()">Pay using UPI</button>
+        </div>
+        <div class="back-to-menu">
+            <button class="back-btn" onclick="backToMenu()">Back to Menu</button>
+        </div>
+    </div>
+
+    <script>
+        function loadReceipt() {
+            const cart = JSON.parse(localStorage.getItem('cart'));
+            const receiptItemsContainer = document.getElementById('receipt-items');
+            let totalCost = 0;
+
+            if (cart) {
+                cart.forEach(item => {
+                    const itemCost = item.price * item.qty;
+                    totalCost += itemCost;
+
+                    const receiptItem = document.createElement('div');
+                    receiptItem.className = 'receipt-item';
+                    receiptItem.innerHTML = `<h4>${item.name} (x${item.qty})</h4><p>₹${itemCost.toFixed(2)}</p>`;
+                    receiptItemsContainer.appendChild(receiptItem);
+                });
+            }
+
+            document.querySelector('.total-cost').innerText = `Total Cost: ₹${totalCost.toFixed(2)}`;
+        }
+
+        function payUsingCash() {
+    window.location.href = "order_placed.html";
+}
+
+        function payUsingUPI() {
+            alert('You selected to pay using UPI. Your order will be processed.');
+        }
+
+        function backToMenu() {
+            window.location.href = 'menu.html';
+        }
+
+        loadReceipt();
+    </script>
+</body>
+</html>
