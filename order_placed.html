@@ -61,38 +61,69 @@
         <button class="back-btn" onclick="backToMenu()">Back to Menu</button>
     </div>
 
-    <script>
-        function downloadReceipt() {
-            const cart = JSON.parse(localStorage.getItem('cart'));
-            let receiptText = 'Order Receipt\n\n';
-            let totalCost = 0;
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+    async function downloadReceipt() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
 
-            if (cart) {
-                cart.forEach(item => {
-                    const itemCost = item.price * item.qty;
-                    totalCost += itemCost;
-                    receiptText += `${item.name} (x${item.qty}) - ₹${itemCost.toFixed(2)}\n`;
-                });
+        const cart = JSON.parse(localStorage.getItem('cart'));
+        const tableNumber = localStorage.getItem('tableNumber') || 'N/A';
+        let receiptText = `Order Receipt\n\nTable Number: ${tableNumber}\n\n`;
+        let totalCost = 0;
+
+        if (cart) {
+            cart.forEach(item => {
+                const itemCost = item.price * item.qty;
+                totalCost += itemCost;
+                receiptText += `${item.name} (x${item.qty}) - ₹${itemCost.toFixed(2)}\n`;
+            });
+        }
+
+        receiptText += `\nTotal Cost: ₹${totalCost.toFixed(2)}`;
+
+        doc.text(receiptText, 10, 10);
+        const pdfBlob = doc.output('blob');
+
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(pdfBlob);
+        link.download = 'receipt.pdf';
+        link.click();
+
+        // Send the receipt via email
+        await sendReceiptByEmail(pdfBlob);
+    }
+
+    async function sendReceiptByEmail(pdfBlob) {
+        const formData = new FormData();
+        formData.append('email', 'ronakzgupta@gmail.com');
+        formData.append('subject', 'Your Order Receipt');
+        formData.append('tableNumber', localStorage.getItem('tableNumber') || 'N/A');
+        formData.append('receipt', pdfBlob, 'receipt.pdf');
+
+        try {
+            const response = await fetch('send_email.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                console.log('Email sent successfully');
+            } else {
+                console.error('Failed to send email');
             }
-
-            receiptText += `\nTotal Cost: ₹${totalCost.toFixed(2)}`;
-
-            const blob = new Blob([receiptText], { type: 'application/pdf' });
-            const link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = 'receipt.pdf';
-            link.click();
-
-            // Send the receipt via email
-            sendReceiptByEmail(receiptText);
+        } catch (error) {
+            console.error('Error sending email:', error);
         }
+    }
 
-        function sendReceiptByEmail(receiptText) {
-            const email = 'ronakzgupta@gmail.com';
-            const subject = 'Your Order Receipt';
-            const body = encodeURIComponent(receiptText);
-            window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
-        }
+    function backToMenu() {
+        localStorage.removeItem('cart');
+        localStorage.removeItem('tableNumber');
+        window.location.href = 'menu.html';
+    }
+
+
 
         function backToMenu() {
             localStorage.removeItem('cart');
