@@ -133,6 +133,12 @@ async function downloadReceipt() {
         localStorage.removeItem('tableNumber');
         window.location.href = 'menu.html';
     }
+
+    async function testEmailSending() {
+    const sampleTextBlob = new Blob(['This is a test'], { type: 'text/plain' });
+    await sendReceiptByEmail(sampleTextBlob);
+}
+testEmailSending();
 </script>
 
 
