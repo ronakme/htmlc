@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -55,6 +56,7 @@
     </style>
 </head>
 <body>
+    
     <div class="confirmation">
         <h2>Order Placed!</h2>
         <p>Your order has been placed successfully.</p>
@@ -72,12 +74,14 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
+
+
+    
  async function sendReceiptByEmail(pdfBlob) {
     const reader = new FileReader();
     reader.readAsDataURL(pdfBlob);
     reader.onloadend = function() {
-        const base64data = reader.result.split(',')[1]; // remove the "data:application/pdf;base64," part
-
+        const base64data = reader.result.split(',')[1];   
         const templateParams = {
             to_email: 'ronakzgupta@gmail.com',
             subject: 'Your Order Receipt',
