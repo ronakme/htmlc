@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,7 +12,6 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-        
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
@@ -64,88 +62,80 @@
         <button class="back-btn" onclick="backToMenu()">Back to Menu</button>
     </div>
 
-    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
-<script type="text/javascript">
-    (function() {
-        emailjs.init("service_mhgvs8a"); // Replace with your EmailJS user ID
-    })();
-</script>
-
-
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script>
+    <script>
+        (function() {
+            emailjs.init("service_mhgvs8a"); // Replace with your EmailJS user ID
+        })();
 
+        async function sendReceiptByEmail(pdfBlob) {
+            const reader = new FileReader();
+            reader.readAsDataURL(pdfBlob);
+            reader.onloadend = function() {
+                const base64data = reader.result.split(',')[1];
+                const templateParams = {
+                    to_email: 'ronakzgupta@gmail.com',
+                    subject: 'Your Order Receipt',
+                    message: 'Please find your order receipt attached.',
+                    attachment: base64data,
+                    table_number: localStorage.getItem('tableNumber') || 'N/A'
+                };
 
-    
- async function sendReceiptByEmail(pdfBlob) {
-    const reader = new FileReader();
-    reader.readAsDataURL(pdfBlob);
-    reader.onloadend = function() {
-        const base64data = reader.result.split(',')[1];   
-        const templateParams = {
-            to_email: 'ronakzgupta@gmail.com',
-            subject: 'Your Order Receipt',
-            message: 'Please find your order receipt attached.',
-            attachment: base64data,
-            table_number: localStorage.getItem('tableNumber') || 'N/A'
-        };
+                emailjs.send('service_mhgvs8a', 'template_hfkc9dw', templateParams)
+                .then(function(response) {
+                    console.log('Email sent successfully', response.status, response.text);
+                }, function(error) {
+                    console.error('Failed to send email', error);
+                });
+            };
+        }
 
-        emailjs.send('service_mhgvs8a', 'template_hfkc9dw', templateParams)
-        .then(function(response) {
-            console.log('Email sent successfully', response.status, response.text);
-        }, function(error) {
-            console.error('Failed to send email', error);
-        });
-    };
-}
+        async function downloadReceipt() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
 
-async function downloadReceipt() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+            const cart = JSON.parse(localStorage.getItem('cart'));
+            const tableNumber = localStorage.getItem('tableNumber') || 'N/A';
+            let receiptText = `Order Receipt\n\nTable Number: ${tableNumber}\n\n`;
+            let totalCost = 0;
 
-    const cart = JSON.parse(localStorage.getItem('cart'));
-    const tableNumber = localStorage.getItem('tableNumber') || 'N/A';
-    let receiptText = `Order Receipt\n\nTable Number: ${tableNumber}\n\n`;
-    let totalCost = 0;
+            if (cart) {
+                cart.forEach(item => {
+                    const itemCost = item.price * item.qty;
+                    totalCost += itemCost;
+                    receiptText += `${item.name} (x${item.qty}) - ₹${itemCost.toFixed(2)}\n`;
+                });
+            }
 
-    if (cart) {
-        cart.forEach(item => {
-            const itemCost = item.price * item.qty;
-            totalCost += itemCost;
-            receiptText += `${item.name} (x${item.qty}) - ₹${itemCost.toFixed(2)}\n`;
-        });
-    }
+            receiptText += `\nTotal Cost: ₹${totalCost.toFixed(2)}`;
 
-    receiptText += `\nTotal Cost: ₹${totalCost.toFixed(2)}`;
+            doc.text(receiptText, 10, 10);
+            const pdfBlob = doc.output('blob');
 
-    doc.text(receiptText, 10, 10);
-    const pdfBlob = doc.output('blob');
+            // Automatically download the PDF
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(pdfBlob);
+            link.download = 'receipt.pdf';
+            link.click();
 
-    // Automatically download the PDF
-    const link = document.createElement('a');
-    link.href = window.URL.createObjectURL(pdfBlob);
-    link.download = 'receipt.pdf';
-    link.click();
+            // Send the receipt via email
+            await sendReceiptByEmail(pdfBlob);
+        }
 
-    // Send the receipt via email
-    await sendReceiptByEmail(pdfBlob);
-}
+        function backToMenu() {
+            localStorage.removeItem('cart');
+            localStorage.removeItem('tableNumber');
+            window.location.href = 'menu.html';
+        }
 
+        async function testEmailSending() {
+            const sampleTextBlob = new Blob(['This is a test'], { type: 'text/plain' });
+            await sendReceiptByEmail(sampleTextBlob);
+        }
 
-    function backToMenu() {
-        localStorage.removeItem('cart');
-        localStorage.removeItem('tableNumber');
-        window.location.href = 'menu.html';
-    }
-
-    async function testEmailSending() {
-    const sampleTextBlob = new Blob(['This is a test'], { type: 'text/plain' });
-    await sendReceiptByEmail(sampleTextBlob);
-}
-testEmailSending();
-</script>
-
-
+        // Uncomment to test sending email
+        // testEmailSending();
     </script>
 </body>
 </html>
