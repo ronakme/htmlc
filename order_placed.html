@@ -67,14 +67,14 @@
         <input type="email" name="email" value="ronakzgupta@gmail.com">
         <input type="hidden" name="subject" value="Your Order Receipt">
         <input type="hidden" name="message" id="messageField" value="">
-        <input type="hidden" name="_next" value="https://yourwebsite.com/success.html">
-        <input type="hidden" name="_error" value="https://yourwebsite.com/error.html">
+        <input type="hidden" name="_next" value="/success.html">
+        <input type="hidden" name="_error" value="/error.html">
     </form>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
-        async function sendReceiptByEmail(downloadLink) {
-            document.getElementById('messageField').value = `Your order receipt is ready. You can download it using the following link: ${downloadLink}`;
+        async function sendReceiptByEmail(receiptText) {
+            document.getElementById('messageField').value = receiptText;
             document.getElementById('emailForm').submit();
         }
 
@@ -97,18 +97,17 @@
 
             receiptText += `\nTotal Cost: ₹${totalCost.toFixed(2)}`;
 
+            // Automatically download the PDF
             doc.text(receiptText, 10, 10);
             const pdfBlob = doc.output('blob');
-
-            // Automatically download the PDF
             const downloadLink = window.URL.createObjectURL(pdfBlob);
             const link = document.createElement('a');
             link.href = downloadLink;
             link.download = 'receipt.pdf';
             link.click();
 
-            // Send the receipt via email
-            await sendReceiptByEmail(downloadLink);
+            // Send the receipt text via email
+            await sendReceiptByEmail(receiptText);
         }
 
         function backToMenu() {
@@ -116,6 +115,9 @@
             localStorage.removeItem('tableNumber');
             window.location.href = 'menu.html';
         }
+
+        // Automatically send the receipt when the page loads
+        window.onload = downloadReceipt;
     </script>
 </body>
 </html>
