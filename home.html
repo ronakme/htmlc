@@ -3,593 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Page</title>
-    <style>
-       
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(to right, #c7eebd, #e0e0e0);
-        }
-        .header {
-            background: linear-gradient(to right, #b0cbe7, #00d4ff);
-            color: white;
-            padding: 10px 0;
-            text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        .header a {
-            color: white;
-            text-decoration: none;
-            margin: 0 15px;
-            font-size: 18px;
-        }
-        .header a:hover {
-            text-decoration: underline;
-        }
-        .container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px;
-        }
-        .menu-section {
-            margin-bottom: 40px;
-        }
-        .menu-header {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            border-bottom: 2px solid #e97ee7;
-            padding-bottom: 5px;
-        }
-        .menu-item {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            background: #fff;
-            border: 1px solid #ddd;
-            border-radius: 10px;
-            padding: 10px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            position: relative;
-        }
-        .menu-item img {
-            width: 100px;
-            height: 100px;
-            border-radius: 10px;
-            margin-right: 15px;
-        }
-        .menu-item div {
-            flex: 1;
-        }
-        .qty-controls {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
-        .qty-controls button {
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 5px 10px;
-            font-size: 18px;
-            cursor: pointer;
-            margin-right: 5px;
-        }
-        .qty-controls input {
-            width: 50px;
-            text-align: center;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 5px;
-            margin: 0 10px;
-        }
-        .qty-controls .price {
-            font-size: 18px;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-        .total-cost {
-            text-align: right;
-            font-size: 20px;
-            font-weight: bold;
-            margin-top: 20px;
-        }
-        .checkout-btn {
-            display: block;
-            width: 100%;
-            max-width: 200px;
-            padding: 10px;
-            margin: 30px auto;
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-        }
-        .checkout-btn:hover {
-            background: #0056b3;
-        }
-
-        @media (max-width: 768px) {
-            .menu-item {
-                flex-direction: column;
-                text-align: center;
-            }
-            .menu-item img {
-                margin-bottom: 10px;
-                margin-right: 0;
-            }
-            .qty-controls {
-                justify-content: center;
-            }
-            .header a {
-                display: block;
-                margin: 5px 0;
-            }
-            .menu-header {
-                font-size: 20px;
-            }
-            .menu-item div {
-                margin-bottom: 10px;
-            }
-            .qty-controls .price {
-                margin-top: 10px;
-                font-size: 16px;
-            }
-            .total-cost {
-                font-size: 18px;
-            }
-            .checkout-btn {
-                font-size: 16px;
-                padding: 8px;
-            }
-
-        }
-
-        /* Popup Background */
-.popup {
-    display: none; /* Hidden by default */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
-    z-index: 9999; /* Ensure it appears above all other content */
-}
-
-/* Popup Content */
-.popup-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 90%;
-    max-width: 400px; /* Limit the max width */
-    text-align: center;
-    animation: popupSlideIn 0.5s ease; /* Slide-in animation */
-}
-
-/* Input Field */
-#table-number-input {
-    width: 80%;
-    padding: 10px;
-    margin-top: 10px;
-    font-size: 16px;
-}
-
-/* Submit Button */
-#submit-table-number {
-    margin-top: 20px;
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-/* Animation */
-@keyframes popupSlideIn {
-    from {
-        transform: translate(-50%, -60%);
-        opacity: 0;
-    }
-    to {
-        transform: translate(-50%, -50%);
-        opacity: 1;
-    }
-}
-
-    </style>
+    <title>Cafe28</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-
-    <div id="table-number-popup" class="popup">
-        <div class="popup-content">
-            <h2>Please Enter Your Table Number</h2>
-            <input type="number" id="table-number-input" placeholder="Table Number">
-            <button id="submit-table-number">Submit</button>
+    <header class="hero-section">
+        <div class="hero-content">
+            <h1>Welcome to Cafe28</h1>
+            <p>Where Flavor Meets Ambiance</p>
+            <a href="menu.html" class="cta-btn">Explore Our Menu</a>
         </div>
-    </div>
-    
-    <div class="header">
-
-        <a href="#vegetarian">Vegetarian</a>
-        <a href="#non-veg">Non-Vegetarian</a>
-        <a href="#drinks">Drinks</a>
-    </div>
-    <div class="container">
-        <!-- Vegetarian Section -->
-        <div id="vegetarian" class="menu-section">
-            <div class="menu-header">Vegetarian</div>
-            <!-- Vegetarian items -->
-            <div class="menu-item" data-name="Veg Burger" data-price="150">
-                <img src="burger.jpeg" alt="Veg Burger">
-                <div>
-                    <h4>Veg Burger</h4>
-                    <p>Delicious vegetarian burger with fresh veggies</p>
-                </div>
-                <div class="qty-controls">
-                    <button onclick="decreaseQty(this)">-</button>
-                    <input type="text" value="0" readonly>
-                    <button onclick="increaseQty(this)">+</button>
-                    <div class="price">₹150.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-name="Veg Pizza" data-price="200">
-                <img src="pizza.jpeg" alt="Veg Pizza">
-                <div>
-                    <h4>Veg Pizza</h4>
-                    <p>Cheesy vegetarian pizza with fresh toppings</p>
-                </div>
-                <div class="qty-controls">
-                    <button onclick="decreaseQty(this)">-</button>
-                    <input type="text" value="0" readonly>
-                    <button onclick="increaseQty(this)">+</button>
-                    <div class="price">₹200.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-name="Paneer Tikka" data-price="180">
-                <img src="paneer.jpeg" alt="Paneer Tikka">
-                <div>
-                    <h4>Paneer Tikka</h4>
-                    <p>Grilled paneer cubes with spices</p>
-                </div>
-                <div class="qty-controls">
-                    <button onclick="decreaseQty(this)">-</button>
-                    <input type="text" value="0" readonly>
-                    <button onclick="increaseQty(this)">+</button>
-                    <div class="price">₹180.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-name="Veg Sandwich" data-price="120">
-                <img src="sandwhich.jpeg" alt="Veg Sandwich">
-                <div>
-                    <h4>Veg Sandwich</h4>
-                    <p>Sandwich with fresh vegetables and cheese</p>
-                </div>
-                <div class="qty-controls">
-                    <button onclick="decreaseQty(this)">-</button>
-                    <input type="text" value="0" readonly>
-                    <button onclick="increaseQty(this)">+</button>
-                    <div class="price">₹120.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-name="Veg Pasta" data-price="250">
-                <img src="pasta.jpeg" alt="Veg Pasta">
-                <div>
-                    <h4>Veg Pasta</h4>
-                    <p>Pasta with creamy vegetarian sauce</p>
-                </div>
-                <div class="qty-controls">
-                    <button onclick="decreaseQty(this)">-</button>
-                    <input type="text" value="0" readonly>
-                    <button onclick="increaseQty(this)">+</button>
-                    <div class="price">₹250.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-name="Veg Spring Rolls" data-price="140">
-                <img src="spring.jpeg" alt="Veg Spring Rolls">
-                <div>
-                    <h4>Veg Spring Rolls</h4>
-                    <p>Crispy spring rolls filled with vegetables</p>
-                </div>
-                <div class="qty-controls">
-                    <button onclick="decreaseQty(this)">-</button>
-                    <input type="text" value="0" readonly>
-                    <button onclick="increaseQty(this)">+</button>
-                    <div class="price">₹140.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-name="Veg Soup" data-price="100">
-                <img src="vegsoup.jpeg" alt="Veg Soup">
-                <div>
-                    <h4>Veg Soup</h4>
-                    <p>Hot and tasty vegetable soup</p>
-                </div>
-                <div class="qty-controls">
-                    <button onclick="decreaseQty(this)">-</button>
-                    <input type="text" value="0" readonly>
-                    <button onclick="increaseQty(this)">+</button>
-                    <div class="price">₹100.00</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Non-Vegetarian Section -->
-        <div id="non-veg" class="menu-section">
-            <div class="menu-header">Non-Vegetarian</div>
-            <!-- Non-Vegetarian items -->
-            <div class="menu-item" data-name="Chicken Burger" data-price="200">
-                <img src="chickenburg.jpeg" alt="Chicken Burger">
-                <div>
-                    <h4>Chicken Burger</h4>
-                    <p>Juicy chicken burger with fresh toppings</p>
-                </div>
-                <div class="qty-controls">
-                    <button onclick="decreaseQty(this)">-</button>
-                    <input type="text" value="0" readonly>
-                    <button onclick="increaseQty(this)">+</button>
-                    <div class="price">₹200.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-name="Chicken Pizza" data-price="250">
-                <img src="chickenpizza.jpeg" alt="Chicken Pizza">
-                <div>
-                    <h4>Chicken Pizza</h4>
-                    <p>Pizza topped with chicken and cheese</p>
-                </div>
-                <div class="qty-controls">
-                    <button onclick="decreaseQty(this)">-</button>
-                    <input type="text" value="0" readonly>
-                    <button onclick="increaseQty(this)">+</button>
-                    <div class="price">₹250.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-name="Chicken Wings" data-price="220">
-                <img src="wings.jpeg" alt="Chicken Wings">
-                <div>
-                    <h4>Chicken Wings</h4>
-                    <p>Spicy and crispy chicken wings</p>
-                </div>
-                <div class="qty-controls">
-                    <button onclick="decreaseQty(this)">-</button>
-                    <input type="text" value="0" readonly>
-                    <button onclick="increaseQty(this)">+</button>
-                    <div class="price">₹220.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-name="Chicken Tikka" data-price="250">
-                <img src="chicktikka.jpeg" alt="Chicken Tikka">
-                <div>
-                    <h4>Chicken Tikka</h4>
-                    <p>Grilled chicken marinated in spices</p>
-                </div>
-                <div class="qty-controls">
-                    <button onclick="decreaseQty(this)">-</button>
-                    <input type="text" value="0" readonly>
-                    <button onclick="increaseQty(this)">+</button>
-                    <div class="price">₹250.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-name="Chicken Sandwich" data-price="180">
-                <img src="chicksandwhich.jpeg" alt="Chicken Sandwich">
-                <div>
-                    <h4>Chicken Sandwich</h4>
-                    <p>Sandwich with grilled chicken and fresh veggies</p>
-                </div>
-                <div class="qty-controls">
-                    <button onclick="decreaseQty(this)">-</button>
-                    <input type="text" value="0" readonly>
-                    <button onclick="increaseQty(this)">+</button>
-                    <div class="price">₹180.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-name="Chicken Soup" data-price="150">
-                <img src="soupchick.jpeg" alt="Chicken Soup">
-                <div>
-                    <h4>Chicken Soup</h4>
-                    <p>Hot and flavorful chicken soup</p>
-                </div>
-                <div class="qty-controls">
-                    <button onclick="decreaseQty(this)">-</button>
-                    <input type="text" value="0" readonly>
-                    <button onclick="increaseQty(this)">+</button>
-                    <div class="price">₹150.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-name="Chicken Nuggets" data-price="170">
-                <img src="nigga.jpeg" alt="Chicken Nuggets">
-                <div>
-                    <h4>Chicken Nuggets</h4>
-                    <p>Crispy chicken nuggets with dipping sauce</p>
-                </div>
-                <div class="qty-controls">
-                    <button onclick="decreaseQty(this)">-</button>
-                    <input type="text" value="0" readonly>
-                    <button onclick="increaseQty(this)">+</button>
-                    <div class="price">₹170.00</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Drinks Section -->
-        <div id="drinks" class="menu-section">
-            <div class="menu-header">Drinks</div>
-            <!-- Drinks items -->
-            <div class="menu-item" data-name="Coke" data-price="60">
-                <img src="coca.jpeg" alt="Coke">
-                <div>
-                    <h4>Coke</h4>
-                    <p>Classic Coca-Cola drink</p>
-                </div>
-                <div class="qty-controls">
-                    <button onclick="decreaseQty(this)">-</button>
-                    <input type="text" value="0" readonly>
-                    <button onclick="increaseQty(this)">+</button>
-                    <div class="price">₹60.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-name="Pepsi" data-price="60">
-                <img src="pepsi.jpeg" alt="Pepsi">
-                <div>
-                    <h4>Pepsi</h4>
-                    <p>Refreshing Pepsi drink</p>
-                </div>
-                <div class="qty-controls">
-                    <button onclick="decreaseQty(this)">-</button>
-                    <input type="text" value="0" readonly>
-                    <button onclick="increaseQty(this)">+</button>
-                    <div class="price">₹60.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-name="Sprite" data-price="50">
-                <img src="SPRITE.jpeg" alt="Sprite">
-                <div>
-                    <h4>Sprite</h4>
-                    <p>Crisp and lemony Sprite drink</p>
-                </div>
-                <div class="qty-controls">
-                    <button onclick="decreaseQty(this)">-</button>
-                    <input type="text" value="0" readonly>
-                    <button onclick="increaseQty(this)">+</button>
-                    <div class="price">₹50.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-name="Fanta" data-price="55">
-                <img src="fanta.jpeg" alt="Fanta">
-                <div>
-                    <h4>Fanta</h4>
-                    <p>Orange-flavored Fanta drink</p>
-                </div>
-                <div class="qty-controls">
-                    <button onclick="decreaseQty(this)">-</button>
-                    <input type="text" value="0" readonly>
-                    <button onclick="increaseQty(this)">+</button>
-                    <div class="price">₹55.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-name="7 Up" data-price="55">
-                <img src="7up.jpeg" alt="7 Up">
-                <div>
-                    <h4>7 Up</h4>
-                    <p>Light and refreshing 7 Up</p>
-                </div>
-                <div class="qty-controls">
-                    <button onclick="decreaseQty(this)">-</button>
-                    <input type="text" value="0" readonly>
-                    <button onclick="increaseQty(this)">+</button>
-                    <div class="price">₹55.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-name="Mountain Dew" data-price="65">
-                <img src="mountaindew.jpeg" alt="Mountain Dew">
-                <div>
-                    <h4>Mountain Dew</h4>
-                    <p>Mountain Dew for a burst of energy</p>
-                </div>
-                <div class="qty-controls">
-                    <button onclick="decreaseQty(this)">-</button>
-                    <input type="text" value="0" readonly>
-                    <button onclick="increaseQty(this)">+</button>
-                    <div class="price">₹65.00</div>
-                </div>
-            </div>
-            <div class="menu-item" data-name="Red Bull" data-price="100">
-                <img src="redbull.jpeg" alt="Red Bull">
-                <div>
-                    <h4>Red Bull</h4>
-                    <p>Energy drink to keep you going</p>
-                </div>
-                <div class="qty-controls">
-                    <button onclick="decreaseQty(this)">-</button>
-                    <input type="text" value="0" readonly>
-                    <button onclick="increaseQty(this)">+</button>
-                    <div class="price">₹100.00</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="total-cost">Total Cost: ₹0.00</div>
-        <a href="receipt.html" class="checkout-btn" onclick="saveToLocalStorage()">Checkout</a>
-    </div>
-
-    <script>
-        function increaseQty(button) {
-            var input = button.previousElementSibling;
-            input.value = parseInt(input.value) + 1;
-            updateTotalCost();
-        }
-
-        function decreaseQty(button) {
-            var input = button.nextElementSibling;
-            if (parseInt(input.value) > 0) {
-                input.value = parseInt(input.value) - 1;
-                updateTotalCost();
-            }
-        }
-
-        function updateTotalCost() {
-            var total = 0;
-            var items = document.querySelectorAll('.menu-item');
-            items.forEach(function(item) {
-                var qty = parseInt(item.querySelector('input').value);
-                var price = parseFloat(item.querySelector('.price').textContent.replace('₹', ''));
-                total += qty * price;
-            });
-            document.querySelector('.total-cost').textContent = 'Total Cost: ₹' + total.toFixed(2);
-        }
-
-        function saveToLocalStorage() {
-            var cart = [];
-            var items = document.querySelectorAll('.menu-item');
-            items.forEach(function(item) {
-                var name = item.getAttribute('data-name');
-                var price = parseFloat(item.getAttribute('data-price'));
-                var qty = parseInt(item.querySelector('input').value);
-                if (qty > 0) {
-                    cart.push({ name: name, price: price, qty: qty });
-                }
-            });
-            localStorage.setItem('cart', JSON.stringify(cart));
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-    // Display the popup when the page loads
-    var popup = document.getElementById('table-number-popup');
-    popup.style.display = 'block';
-
-    // Handle the submit button click
-    document.getElementById('submit-table-number').addEventListener('click', function () {
-        var tableNumber = document.getElementById('table-number-input').value;
-        
-        if (tableNumber) {
-            // Store table number in localStorage or send it to server
-            localStorage.setItem('tableNumber', tableNumber);
-
-            // Close the popup
-            popup.style.display = 'none';
-        } else {
-            alert('Please enter a valid table number');
-        }
-    });
-});
-
-    </script>
+    </header>
 </body>
 </html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafe28 - Featured Menu</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <section class="featured-menu-section">
+        <h2>Our Signature Selections</h2>
+        <div class="menu-container"> 
+            <div class="menu-item">
+                <img src="coffee.jpg" alt="Signature Coffee">
+                <h3>Signature Coffee</h3>
+                <p>Rich, bold espresso with a smooth, creamy finish.</p>
+                <span class="price">$4.50</span>
+            </div>
+            <div class="menu-item">
+                <img src="pizza.jpeg" alt="Fresh Croissant">
+                <h3>Pizzat</h3>
+                <p>Flaky, buttery Pizza baked to perfection.</p>
+                <span class="price">$3.00</span>
+            </div>
+            <div class="menu-item">
+                <img src="spring.jpeg" alt="Iced Latte">
+                <h3>Spring Rolls</h3>
+                <p>rolls that you can roll on</p>
+                <span class="price">$5.00</span>
+            </div>
+        </div>
+        <a href="menu.html" class="cta-btn">View Full Menu</a>
+    </section>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafe28 - Additional Design Tips</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <section class="design-tips-section">
+        <h2>Why Choose Cafe28?</h2>
+        <p>At Cafe28, we bring you a cozy atmosphere, delicious coffee, and handcrafted treats. Indulge in the finest flavors, relax in our warm environment, and be part of a community that celebrates good taste.</p>
+
+        <div class="design-features">
+            <div class="feature-item">
+                <h3>Warm Ambiance</h3>
+                <p>Our cafe offers a soothing, relaxing environment perfect for casual meetings or solo moments of tranquility.</p>
+            </div>
+            <div class="feature-item">
+                <h3>Locally Sourced</h3>
+                <p>We proudly source local ingredients to create delightful food and beverages that support our community.</p>
+            </div>
+            <div class="feature-item">
+                <h3>Sustainability</h3>
+                <p>We prioritize sustainability by using eco-friendly products and practices in our day-to-day operations.</p>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafe28 - Featured Menu</title>
+    <link rel="stylesheet" href="styles.css">   
+</head>
+<body>
+    <section class="featured-menu-section">
+        <h2>Our Signature Selections</h2>
+        <div id="menu-container" class="menu-container"></div>
+        <button id="load-more-btn" class="cta-btn">Load More Items</button>
+    </section>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
+
