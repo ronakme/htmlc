@@ -125,7 +125,7 @@
     <div class="container">
         <h2>Pay using UPI</h2>
         <div class="qr-code">
-            <img src="paytm.jpeg" alt="Scan to Pay">
+            <img src="your-qr-code-url-here" alt="Scan to Pay">
         </div>
         <div class="input-field">
             <label for="transactionId">Enter Transaction ID:</label>
@@ -139,6 +139,7 @@
     <form id="emailForm" action="https://formspree.io/f/xwpewljj" method="POST" style="display:none;">
         <input type="email" name="email" value="ronakzgupta@gmail.com">
         <input type="hidden" name="transaction_id" id="transactionIdField">
+        <input type="hidden" name="order_details" id="orderDetailsField">
         <input type="hidden" name="_next" value="success.html">
         <input type="hidden" name="_error" value="error.html">
     </form>
@@ -150,7 +151,28 @@
                 alert('Please enter a valid transaction ID.');
                 return;
             }
+
+            // Retrieve order details from localStorage
+            const cart = JSON.parse(localStorage.getItem('cart'));
+            const tableNumber = localStorage.getItem('tableNumber') || 'N/A';
+            let orderDetails = `Table Number: ${tableNumber}\n\nOrder Details:\n`;
+            let totalCost = 0;
+
+            if (cart) {
+                cart.forEach(item => {
+                    const itemCost = item.price * item.qty;
+                    totalCost += itemCost;
+                    orderDetails += `${item.name} (x${item.qty}) - ₹${itemCost.toFixed(2)}\n`;
+                });
+            }
+
+            orderDetails += `\nTotal Cost: ₹${totalCost.toFixed(2)}`;
+
+            // Set the order details and transaction ID in the form
+            document.getElementById('orderDetailsField').value = orderDetails;
             document.getElementById('transactionIdField').value = transactionId;
+
+            // Submit the form to send the email
             document.getElementById('emailForm').submit();
         }
 
