@@ -62,33 +62,20 @@
         <button class="back-btn" onclick="backToMenu()">Back to Menu</button>
     </div>
 
-    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    <!-- Formspree form -->
+    <form id="emailForm" action="https://formspree.io/f/xwpewljj" method="POST" style="display:none;">
+        <input type="email" name="email" value="ronakzgupta@gmail.com">
+        <input type="hidden" name="subject" value="Your Order Receipt">
+        <input type="hidden" name="message" id="messageField" value="">
+        <input type="hidden" name="_next" value="https://yourwebsite.com/success.html">
+        <input type="hidden" name="_error" value="https://yourwebsite.com/error.html">
+    </form>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
-        (function() {
-            emailjs.init("service_mhgvs8a"); // Replace with your EmailJS user ID
-        })();
-
-        async function sendReceiptByEmail(pdfBlob) {
-            const reader = new FileReader();
-            reader.readAsDataURL(pdfBlob);
-            reader.onloadend = function() {
-                const base64data = reader.result.split(',')[1];
-                const templateParams = {
-                    to_email: 'ronakzgupta@gmail.com',
-                    subject: 'Your Order Receipt',
-                    message: 'Please find your order receipt attached.',
-                    attachment: base64data,
-                    table_number: localStorage.getItem('tableNumber') || 'N/A'
-                };
-
-                emailjs.send('service_mhgvs8a', 'template_hfkc9dw', templateParams)
-                .then(function(response) {
-                    console.log('Email sent successfully', response.status, response.text);
-                }, function(error) {
-                    console.error('Failed to send email', error);
-                });
-            };
+        async function sendReceiptByEmail(downloadLink) {
+            document.getElementById('messageField').value = `Your order receipt is ready. You can download it using the following link: ${downloadLink}`;
+            document.getElementById('emailForm').submit();
         }
 
         async function downloadReceipt() {
@@ -114,13 +101,14 @@
             const pdfBlob = doc.output('blob');
 
             // Automatically download the PDF
+            const downloadLink = window.URL.createObjectURL(pdfBlob);
             const link = document.createElement('a');
-            link.href = window.URL.createObjectURL(pdfBlob);
+            link.href = downloadLink;
             link.download = 'receipt.pdf';
             link.click();
 
             // Send the receipt via email
-            await sendReceiptByEmail(pdfBlob);
+            await sendReceiptByEmail(downloadLink);
         }
 
         function backToMenu() {
@@ -128,14 +116,6 @@
             localStorage.removeItem('tableNumber');
             window.location.href = 'menu.html';
         }
-
-        async function testEmailSending() {
-            const sampleTextBlob = new Blob(['This is a test'], { type: 'text/plain' });
-            await sendReceiptByEmail(sampleTextBlob);
-        }
-
-        // Uncomment to test sending email
-        // testEmailSending();
     </script>
 </body>
 </html>
