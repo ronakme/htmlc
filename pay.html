@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pay Using UPI</title>
+    <title>UPI Payment</title>
     <style>
         body {
-            background: linear-gradient(to right, #f0f2f5, #c3cfe2);
+            background: linear-gradient(to right, #f5f7fa, #c3cfe2, #eef2f3);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -29,21 +28,44 @@
         }
 
         h2 {
+            margin-bottom: 20px;
             color: #4CAF50;
-            margin-bottom: 20px;
         }
 
-        img {
-            max-width: 100%;
+        .qr-code {
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .qr-code img {
+            width: 100%;
+            max-width: 200px;
             height: auto;
-            margin-bottom: 20px;
         }
 
-        input[type="file"] {
-            margin-bottom: 20px;
+        .input-field {
+            margin: 20px 0;
+            text-align: left;
         }
 
-        .upload-btn {
+        .input-field label {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .input-field input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .submit-btn {
             background-color: #4CAF50;
             border: none;
             color: white;
@@ -52,51 +74,88 @@
             text-decoration: none;
             display: inline-block;
             font-size: 16px;
+            margin-top: 20px;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            width: 100%;
         }
 
-        .upload-btn:hover {
+        .submit-btn:hover {
             background-color: #45a049;
+        }
+
+        .back-btn {
+            background-color: #f39c12;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin-top: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .back-btn:hover {
+            background-color: #e67e22;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px;
+            }
+
+            .input-field input {
+                font-size: 14px;
+            }
+
+            .submit-btn, .back-btn {
+                padding: 8px 15px;
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Pay Using UPI</h2>
-        <img src="paytm.jpeg" alt="QR Code">
-        <p>Please scan the QR code to pay.</p>
-        <input type="file" id="screenshot" accept="image/*">
-        <button class="upload-btn" onclick="uploadScreenshot()">Upload Screenshot</button>
+        <h2>Pay using UPI</h2>
+        <div class="qr-code">
+            <img src="paytm.jpeg" alt="Scan to Pay">
+        </div>
+        <div class="input-field">
+            <label for="transactionId">Enter Transaction ID:</label>
+            <input type="text" id="transactionId" placeholder="Enter your transaction ID" required>
+        </div>
+        <button class="submit-btn" onclick="submitTransactionId()">Submit</button>
+        <button class="back-btn" onclick="backToReceipt()">Back to Receipt</button>
     </div>
 
+    <!-- Formspree form -->
     <form id="emailForm" action="https://formspree.io/f/xwpewljj" method="POST" style="display:none;">
         <input type="email" name="email" value="ronakzgupta@gmail.com">
-        <input type="hidden" name="subject" value="UPI Payment Screenshot">
-        <input type="hidden" name="message" value="Please find the UPI payment screenshot attached.">
+        <input type="hidden" name="transaction_id" id="transactionIdField">
         <input type="hidden" name="_next" value="success.html">
         <input type="hidden" name="_error" value="error.html">
-        <input type="hidden" name="attachment" id="screenshotData">
     </form>
 
     <script>
-        function uploadScreenshot() {
-            const fileInput = document.getElementById('screenshot');
-            if (fileInput.files.length === 0) {
-                alert("Please select a screenshot file to upload.");
+        function submitTransactionId() {
+            const transactionId = document.getElementById('transactionId').value;
+            if (!transactionId) {
+                alert('Please enter a valid transaction ID.');
                 return;
             }
+            document.getElementById('transactionIdField').value = transactionId;
+            document.getElementById('emailForm').submit();
+        }
 
-            const file = fileInput.files[0];
-            const reader = new FileReader();
-
-            reader.onloadend = function () {
-                document.getElementById('screenshotData').value = reader.result.split(',')[1];
-                document.getElementById('emailForm').submit();
-            };
-
-            reader.readAsDataURL(file);
+        function backToReceipt() {
+            window.location.href = 'receipt.html';
         }
     </script>
 </body>
